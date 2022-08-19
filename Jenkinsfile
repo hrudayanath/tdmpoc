@@ -11,10 +11,12 @@ pipeline {
         }
         stage('Front-end') {
             agent {
-                docker { image 'node:16.13.1-alpine' }
+                docker { image 'nickgryg/alpine-pandas' }
             }
             steps {
-                sh 'node --version'
+                sh '''
+			python3 -c 'import pandas'
+                   '''
             }
         }
     }
