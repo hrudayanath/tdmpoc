@@ -1,34 +1,20 @@
 pipeline {
-    agent any 
+    agent none
     stages {
-        stage('Build Stage') {
+        stage('Back-end') {
+            agent {
+                docker { image 'maven:3.8.1-adoptopenjdk-11' }
+            }
             steps {
-                sh "echo 'Hello world!'"
-                sh "users"
-                sh "pylint"
+                sh 'mvn --version'
             }
         }
-        stage('Test Data Generation Stage') {
-            container("amancevice/pandas"){
+        stage('Front-end') {
+            agent {
+                docker { image 'node:16.13.1-alpine' }
+            }
             steps {
-                sh  ''' 
-                   echo 'Generating Test Data!'
-                   users
-                   python3 -c 'import pandas;'
-                   ls -ltra
-
-                '''
-            }
-            }
-        }
-
-        stage('Integration Test Stage') {
-            container("python3") {
-                steps {
-                    sh "echo 'Running Integration Testing'"
-                    sh "users"
-                    sh "ls"
-               }
+                sh 'node --version'
             }
         }
     }
