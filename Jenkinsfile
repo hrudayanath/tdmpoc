@@ -9,12 +9,11 @@ pipeline {
             }
         }
         stage('Test Data Generation Stage') {
-            container(""){
+            container("amancevice/pandas"){
             steps {
                 sh  ''' 
                    echo 'Generating Test Data!'
                    users
-                   conda activate py3.8 
                    python3 -c 'import pandas;'
                    ls -ltra
 
